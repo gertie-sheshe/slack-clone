@@ -1,6 +1,15 @@
 import React from "react";
-import { FiberManualRecord, Create } from "@mui/icons-material";
+
 import styled from "styled-components";
+import {
+  FiberManualRecord,
+  Create,
+  ExpandMore,
+  Add,
+} from "@mui/icons-material";
+import { navLinks, channelLinks } from "./navData";
+
+import SidebarListItem from "../../components/SidebarListItem";
 
 function Sidebar() {
   return (
@@ -15,6 +24,30 @@ function Sidebar() {
         </SidebarInfo>
         <Create />
       </SidebarHeader>
+      <nav>
+        <SidebarList>
+          {navLinks.map(({ title, icon }) => (
+            <SidebarListItem title={title} Icon={icon} key={title} />
+          ))}
+        </SidebarList>
+      </nav>
+
+      <hr />
+      <ChannelButton>
+        <ExpandMore fontSize="small" />
+        Channels
+      </ChannelButton>
+      <hr />
+      <ChannelButton>
+        <Add fontSize="small" />
+        Add Channel
+      </ChannelButton>
+
+      <SidebarList>
+        {channelLinks.map(({ title }) => (
+          <SidebarListItem key={title} title={title} />
+        ))}
+      </SidebarList>
     </SidebarContainer>
   );
 }
@@ -68,5 +101,29 @@ const Status = styled.div`
     font-size: 14px;
     margin-top: 2px;
     margin-right: 2px;
+  }
+`;
+
+const SidebarList = styled.ul`
+  padding: 10px;
+  list-style: none;
+`;
+
+const ChannelButton = styled.button`
+  background-color: transparent;
+  padding: 8px 0;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  width: 100%;
+  border: none;
+  :hover {
+    cursor: pointer;
+  }
+  > svg {
+    margin-right: 10px;
   }
 `;
