@@ -7,12 +7,13 @@ import {
   Add,
 } from "@mui/icons-material";
 import SidebarListItem from "../../components/SidebarListItem";
-
 import { navLinks, channelLinks } from "./navData";
-
 import { createRoom } from "../../config/firebase";
+import useFirebase from "../../hooks/firebaseHooks";
 
 function Sidebar() {
+  const [channels] = useFirebase();
+
   const addChannel = () => {
     const channelName = prompt("Enter channel name");
     if (channelName) {
@@ -54,9 +55,10 @@ function Sidebar() {
       </ChannelButton>
 
       <SidebarList>
-        {channelLinks.map(({ title }) => (
-          <SidebarListItem key={title} title={title} />
-        ))}
+        {channels?.docs.map((channel) => {
+          const { name } = channel.data();
+          return <SidebarListItem key={name} title={name} />;
+        })}
       </SidebarList>
     </SidebarContainer>
   );
