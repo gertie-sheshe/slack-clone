@@ -1,5 +1,4 @@
 import React from "react";
-
 import styled from "styled-components";
 import {
   FiberManualRecord,
@@ -7,11 +6,22 @@ import {
   ExpandMore,
   Add,
 } from "@mui/icons-material";
-import { navLinks, channelLinks } from "./navData";
-
 import SidebarListItem from "../../components/SidebarListItem";
 
+import { navLinks, channelLinks } from "./navData";
+
+import { createRoom } from "../../config/firebase";
+
 function Sidebar() {
+  const addChannel = () => {
+    const channelName = prompt("Enter channel name");
+    if (channelName) {
+      createRoom(channelName);
+    }
+  };
+
+  const selectChannel = (channel) => {};
+
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -38,7 +48,7 @@ function Sidebar() {
         Channels
       </ChannelButton>
       <hr />
-      <ChannelButton>
+      <ChannelButton onClick={addChannel}>
         <Add fontSize="small" />
         Add Channel
       </ChannelButton>
@@ -61,6 +71,11 @@ const SidebarContainer = styled.div`
   border-top: 1px solid #49274b;
   max-width: 260px;
   margin-top: 49px;
+  > hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #49274b;
+  }
 `;
 
 const SidebarHeader = styled.div`
