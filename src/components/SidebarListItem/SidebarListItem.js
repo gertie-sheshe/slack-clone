@@ -1,25 +1,35 @@
 import React from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { enterRoom } from "../../features/appSlice";
 
-function SidebarListItem({ Icon, title }) {
+function SidebarListItem({ Icon, title, id }) {
+  const dispatch = useDispatch();
+
   if (!title) {
     return null;
   }
+
+  const selectChannel = () => {
+    console.log("IDDD", id);
+    if (id) {
+      dispatch(enterRoom({ roomId: id }));
+    }
+  };
+
   return (
     <SideBarListItemContainer>
-      <ItemLink href="">
-        {Icon ? (
-          <>
-            <Icon fontSize="small" />
-            <p>{title}</p>
-          </>
-        ) : (
-          <>
-            <span>#</span>
-            <p>{title}</p>
-          </>
-        )}
-      </ItemLink>
+      {Icon ? (
+        <ItemLink href="">
+          <Icon fontSize="small" />
+          <p>{title}</p>
+        </ItemLink>
+      ) : (
+        <Button onClick={selectChannel}>
+          <span>#</span>
+          {title}
+        </Button>
+      )}
     </SideBarListItemContainer>
   );
 }
@@ -42,5 +52,18 @@ const ItemLink = styled.a`
   > p {
     padding-left: 10px;
     font-weight: 600;
+  }
+`;
+
+const Button = styled.button`
+  display: flex;
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  > span {
+    margin-right: 10px;
   }
 `;
