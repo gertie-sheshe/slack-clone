@@ -11,7 +11,6 @@ function SidebarListItem({ Icon, title, id }) {
   }
 
   const selectChannel = () => {
-    console.log("IDDD", id);
     if (id) {
       dispatch(enterRoom({ roomId: id }));
     }

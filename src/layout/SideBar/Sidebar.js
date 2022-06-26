@@ -25,7 +25,7 @@ function Sidebar() {
     <SidebarContainer>
       <SidebarHeader>
         <SidebarInfo>
-          <h2>My Org</h2>
+          <h1>My Org</h1>
           <Status>
             <FiberManualRecord />
             <p>Gertie Sheshe</p>
@@ -98,7 +98,7 @@ const SidebarHeader = styled.div`
 
 const SidebarInfo = styled.div`
   flex: 1;
-  > h2 {
+  > h1 {
     font-size: 15px;
     font-weight: 900;
     margin-bottom: 5px;

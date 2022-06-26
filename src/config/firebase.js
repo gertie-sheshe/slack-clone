@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getFirestore,
+  serverTimestamp,
+} from "firebase/firestore";
 
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -20,10 +24,10 @@ const db = getFirestore(firebaseApp);
 // const auth = firebase.default.auth();
 // const provider = new firebase.auth.GoogleAuthProvider();
 
-// Database fucntions
+// Database functions
 const createRoom = async (name) => {
   try {
-    const docRef = await addDoc(collection(db, "rooms"), {
+    await addDoc(collection(db, "rooms"), {
       name,
     });
   } catch (err) {
@@ -31,4 +35,15 @@ const createRoom = async (name) => {
   }
 };
 
-export { createRoom };
+const addMessage = async (channelId, message) => {
+  try {
+    await addDoc(collection(db, "rooms", channelId, "messages"), {
+      message,
+      timestamp: serverTimestamp(),
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export { createRoom, addMessage };
