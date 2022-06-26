@@ -5,6 +5,7 @@ import {
   getFirestore,
   serverTimestamp,
 } from "firebase/firestore";
+import Image from "../assets/Gertrude.png";
 
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
@@ -40,6 +41,8 @@ const addMessage = async (roomId, message) => {
     await addDoc(collection(db, "rooms", roomId, "messages"), {
       message,
       timestamp: serverTimestamp(),
+      user: "Gertrude Nyenyeshi",
+      userImage: Image,
     });
   } catch (err) {
     console.error(err);

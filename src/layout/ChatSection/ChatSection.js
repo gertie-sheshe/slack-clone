@@ -3,6 +3,7 @@ import { StarBorderOutlined, InfoOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { selectRoomId } from "../../features/appSlice";
 import ChatInput from "../../components/ChatInput";
+import Message from "../../components/Message";
 import { useCurrentRoom, useMessages } from "../../hooks/firebaseHooks";
 import styled from "styled-components";
 
@@ -33,7 +34,15 @@ function ChatSection() {
           {roomMessages?.docs.map((doc) => {
             const { message, timestamp, user, userImage } = doc.data();
 
-            return <div>Woe</div>;
+            return (
+              <Message
+                key={doc.id}
+                message={message}
+                timestamp={timestamp}
+                user={user}
+                userImage={userImage}
+              />
+            );
           })}
         </ChatMessages>
         <ChatInput channelName={roomDetails?.data().name} roomId={roomId} />
