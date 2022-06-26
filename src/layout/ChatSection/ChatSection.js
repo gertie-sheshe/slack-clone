@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { StarBorderOutlined, InfoOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { selectRoomId } from "../../features/appSlice";
@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 // NOTE: room is synonymous with channel
 function ChatSection() {
+  const chatRef = useRef(null);
   const roomId = useSelector(selectRoomId);
 
   const [roomDetails] = useCurrentRoom();
@@ -44,6 +45,7 @@ function ChatSection() {
               />
             );
           })}
+          <ChatBottom ref={chatRef} />
         </ChatMessages>
         <ChatInput channelName={roomDetails?.data().name} roomId={roomId} />
       </>
@@ -63,6 +65,10 @@ const ChatSectionContainer = styled.section`
     font-size: 16px;
     text-align: center;
   }
+`;
+
+const ChatBottom = styled.div`
+  padding-bottom: 200px;
 `;
 
 const ChatRoomInfo = styled.div`
