@@ -35,9 +35,9 @@ const createRoom = async (name) => {
   }
 };
 
-const addMessage = async (channelId, message) => {
+const addMessage = async (roomId, message) => {
   try {
-    await addDoc(collection(db, "rooms", channelId, "messages"), {
+    await addDoc(collection(db, "rooms", roomId, "messages"), {
       message,
       timestamp: serverTimestamp(),
     });

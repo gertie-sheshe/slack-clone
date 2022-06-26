@@ -2,17 +2,17 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import { addMessage } from "../../config/firebase";
 
-function ChatInput({ channelName, channelId }) {
+function ChatInput({ channelName, roomId }) {
   const inputRef = useRef(null);
 
   const sendMessage = async (e) => {
     e.preventDefault();
 
-    if (!channelId) {
+    if (!roomId) {
       return false;
     }
 
-    await addMessage(channelId, inputRef.current.value);
+    await addMessage(roomId, inputRef.current.value);
     inputRef.current.value = "";
   };
 
@@ -22,7 +22,7 @@ function ChatInput({ channelName, channelId }) {
         ref={inputRef}
         aria-label="message room"
         type="text"
-        placeholder={`Message #ROOM`}
+        placeholder={`Message #${channelName}`}
       />
     </Form>
   );

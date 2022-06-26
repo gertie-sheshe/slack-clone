@@ -9,7 +9,7 @@ import {
 import SidebarListItem from "../../components/SidebarListItem";
 import { navLinks } from "./navData";
 import { createRoom } from "../../config/firebase";
-import useFirebase from "../../hooks/firebaseHooks";
+import { useFirebase } from "../../hooks/firebaseHooks";
 
 function Sidebar() {
   const [channels] = useFirebase();

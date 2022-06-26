@@ -3,10 +3,15 @@ import { StarBorderOutlined, InfoOutlined } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import { selectRoomId } from "../../features/appSlice";
 import ChatInput from "../../components/ChatInput";
+import { useCurrentRoom, useMessages } from "../../hooks/firebaseHooks";
 import styled from "styled-components";
 
+// NOTE: room is synonymous with channel
 function ChatSection() {
   const roomId = useSelector(selectRoomId);
+
+  const [roomDetails] = useCurrentRoom();
+  const [roomMessages] = useMessages();
 
   return (
     <ChatSectionContainer>
@@ -14,7 +19,7 @@ function ChatSection() {
       <>
         <ChatRoomInfo>
           <ChatRoomInfoLeft>
-            <h3>#room-name</h3>
+            <h3>{`#${roomDetails?.data().name}`}</h3>
             <StarBorderOutlined />
           </ChatRoomInfoLeft>
           <ChatRoomInfoRight>
@@ -25,8 +30,13 @@ function ChatSection() {
           </ChatRoomInfoRight>
         </ChatRoomInfo>
         <ChatMessages>
-          <ChatInput channelName="" channelId={roomId} />
+          {roomMessages?.docs.map((doc) => {
+            const { message, timestamp, user, userImage } = doc.data();
+
+            return <div>Woe</div>;
+          })}
         </ChatMessages>
+        <ChatInput channelName={roomDetails?.data().name} roomId={roomId} />
       </>
     </ChatSectionContainer>
   );
@@ -57,8 +67,6 @@ const ChatMessages = styled.div`
   border-radius: 20px;
 `;
 
-const ChatInputContainer = styled.div``;
-
 const ChatRoomInfoLeft = styled.div`
   display: flex;
   align-items: center;
@@ -67,7 +75,7 @@ const ChatRoomInfoLeft = styled.div`
     display: flex;
   }
   > svg {
-    margin-left: 5 px;
+    margin-left: 5px;
     font-size: 18px;
   }
 `;
